@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import datetime
 import sys
 from subprocess import PIPE, Popen
 
@@ -37,17 +38,33 @@ def md2man(markdown):
     return stdout
 
 
+def add_header(chapter_num, markdown):
+    name = man_page_name(chapter_num)
+    date = datetime.date.today().strftime("%B %Y")
+    return (
+        f"{name} 7 \"{date}\" {name} \"HPMOR\"\n"
+        "======================================\n"
+        f"{markdown}"
+    )
+
+
 def make_man_page_chapter(chapter_num):
     html = scrape_chapter(chapter_num)
     markdown = pypandoc.convert_text(html, to="markdown-smart", format="html")
+    markdown = add_header(chapter_num, markdown)
     man_page = md2man(markdown)
     return man_page
 
 
+def man_page_name(chapter_num):
+    num_str = str(chapter_num).zfill(3)
+    return f"hpmor-{num_str}"
+
+
 def write_man_page_chapter(chapter_num):
     man_page = make_man_page_chapter(chapter_num)
-    num_str = str(chapter_num).zfill(3)
-    path = f"out/hpmor-{num_str}.7"
+    name = man_page_name(chapter_num)
+    path = f"out/{name}.7"
     with open(path, "w") as file:
         file.write(man_page)
 
