@@ -50,7 +50,7 @@ def add_header(chapter_num, markdown):
 
 def make_man_page_chapter(chapter_num):
     html = scrape_chapter(chapter_num)
-    markdown = pypandoc.convert_text(html, to="markdown-smart", format="html")
+    markdown = pypandoc.convert_text(html, to="markdown_strict", format="html")
     markdown = add_header(chapter_num, markdown)
     man_page = md2man(markdown)
     return man_page
