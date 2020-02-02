@@ -22,9 +22,10 @@ def scrape_chapter(chapter_num):
     resp = requests.get(url)
     resp.raise_for_status()
     soup = BeautifulSoup(resp.text, features="lxml")
+    title = soup.title.text
     chapter_html = soup.find(id="storycontent")
     chapter_html = "".join(map(str, chapter_html.children))
-    return chapter_html
+    return (title, chapter_html)
 
 
 def md2man(markdown):
@@ -38,20 +39,23 @@ def md2man(markdown):
     return stdout
 
 
-def add_header(chapter_num, markdown):
+def add_header(chapter_num, title, markdown):
     name = man_page_name(chapter_num).upper()
     date = datetime.date.today().isoformat()
     return (
         # fields: title section date source manual
         f'{name} 7 "{date}" "Eliezer Yudkowsky" "HPMOR"\n'
         "==============================================\n"
+        "# NAME\n"
+        f"{title}\n"
+        "# DESCRIPTION\n"
         f"{markdown}")
 
 
 def make_man_page_chapter(chapter_num):
-    html = scrape_chapter(chapter_num)
+    (title, html) = scrape_chapter(chapter_num)
     markdown = pypandoc.convert_text(html, to="markdown_strict", format="html")
-    markdown = add_header(chapter_num, markdown)
+    markdown = add_header(chapter_num, title, markdown)
     man_page = md2man(markdown)
     return man_page
 
