@@ -39,11 +39,12 @@ def md2man(markdown):
 
 
 def add_header(chapter_num, markdown):
-    name = man_page_name(chapter_num)
-    date = datetime.date.today().strftime("%B %Y")
+    name = man_page_name(chapter_num).upper()
+    date = datetime.date.today().isoformat()
     return (
-        f"{name} 7 \"{date}\" {name} \"HPMOR\"\n"
-        "======================================\n"
+        # fields: title section date source manual
+        f'{name} 7 "{date}" "Eliezer Yudkowsky" "HPMOR"\n'
+        "==============================================\n"
         f"{markdown}"
     )
 
