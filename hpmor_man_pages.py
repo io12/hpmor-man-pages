@@ -45,8 +45,7 @@ def add_header(chapter_num, markdown):
         # fields: title section date source manual
         f'{name} 7 "{date}" "Eliezer Yudkowsky" "HPMOR"\n'
         "==============================================\n"
-        f"{markdown}"
-    )
+        f"{markdown}")
 
 
 def make_man_page_chapter(chapter_num):
