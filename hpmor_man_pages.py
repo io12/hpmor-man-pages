@@ -39,9 +39,17 @@ def md2man(markdown):
     return stdout
 
 
+def next_chapter_string(chapter_num):
+    if chapter_num == NUM_CHAPTERS:
+        return ""
+
+    return f", __{man_page_name(chapter_num + 1)}__(7)"
+
+
 def add_header(chapter_num, title, markdown):
     name = man_page_name(chapter_num).upper()
     date = datetime.date.today().isoformat()
+    next_chap = next_chapter_string(chapter_num)
     return (
         # fields: title section date source manual
         f'{name} 7 "{date}" "Eliezer Yudkowsky" "HPMOR"\n'
@@ -49,7 +57,9 @@ def add_header(chapter_num, title, markdown):
         "# NAME\n"
         f"{title}\n"
         "# DESCRIPTION\n"
-        f"{markdown}")
+        f"{markdown}\n"
+        "# SEE ALSO\n"
+        f"__hpmor-man-pages__(7){next_chap}\n")
 
 
 def make_man_page_chapter(chapter_num):
