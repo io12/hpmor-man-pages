@@ -24,16 +24,27 @@ def scrape_chapter(chapter_num):
     soup = BeautifulSoup(resp.text, features="lxml")
     title = soup.title.text
     chapter_html = soup.find(id="storycontent")
+
+    # Replace <span> tags with <b>. In HPMOR, <span> is used for underlining,
+    # but man pages don't support underlining.
+    for span in chapter_html.find_all("span"):
+        tag = soup.new_tag("b")
+        tag.string = span.string
+        span.replace_with(tag)
+
     chapter_html = "".join(map(str, chapter_html.children))
     return (title, chapter_html)
 
 
 def md2man(markdown):
-    proc = Popen(["go-md2man"], stdin=PIPE, stdout=PIPE, text=True)
+    proc = Popen(["go-md2man"], stdin=PIPE, stdout=PIPE, stderr=PIPE, text=True)
     (stdout, stderr) = proc.communicate(markdown)
 
-    if stderr is not None or proc.returncode != 0:
+    if stderr != "" or proc.returncode != 0:
         print("error running go-md2man:", proc.returncode, stderr)
+        print("FAILED MARKDOWN BEGIN")
+        print(markdown)
+        print("FAILED MARKDOWN END")
         sys.exit(1)
 
     return stdout
