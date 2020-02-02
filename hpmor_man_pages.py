@@ -89,7 +89,7 @@ def man_page_name(chapter_num):
 def write_man_page_chapter(chapter_num):
     man_page = make_man_page_chapter(chapter_num)
     name = man_page_name(chapter_num)
-    path = f"out/{name}.7"
+    path = f"man7/{name}.7"
     with open(path, "w") as file:
         file.write(man_page)
 
