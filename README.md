@@ -21,8 +21,5 @@ Then run `make` to build the man pages and `sudo make install` to install them. 
 
 ```
 man hpmor-man-pages # table of contents
-```
-
-```
 man hpmor-001 # chapter 1
 ```
