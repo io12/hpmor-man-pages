@@ -17,6 +17,12 @@ First, install the following build dependencies:
 
 Then run `make` to build the man pages and `sudo make install` to install them. To uninstall, run `sudo make uninstall`.
 
+If you don't want to install the man pages, you can open them locally with `man -l ./man7/hpmor-001.7`.
+
+### Arch Linux
+
+Arch Linux users can install [`hpmor-man-pages-git`](https://aur.archlinux.org/packages/hpmor-man-pages-git/) from the AUR.
+
 ## Usage
 
 ```
