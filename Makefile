@@ -20,7 +20,7 @@ $(VENV_PATH): requirements.txt
 	$(VENV_CMD) $(PIP) install -r $<
 
 clean:
-	rm -rf __pycache__ $(OUT_DIR)/$(MAN_GLOB)
+	rm -rf __pycache__ $(VENV_PATH) $(OUT_DIR)/$(MAN_GLOB)
 
 install:
 	mkdir -p $(MAN_DIR)
