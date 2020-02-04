@@ -48,7 +48,7 @@ def make_markdown_toc(chapters):
     ]
     chapters = "\n".join(chapters)
     chapters = ("| Man page | Name |\n"
-                "|----------+------|\n"
+                "|----------|------|\n"
                 f"{chapters}\n")
     return (
         # fields: title section date source manual
