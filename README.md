@@ -12,6 +12,7 @@ This repo contains scripts for building Unix man pages of Eliezer Yudkowsky's ep
 
 First, install the following build dependencies:
 * `python3`
+* `python3-venv`
 * `pandoc`
 * `go-md2man`
 
