@@ -86,7 +86,7 @@ def md2man(markdown):
                  stdin=PIPE,
                  stdout=PIPE,
                  stderr=PIPE,
-                 text=True)
+                 universal_newlines=True)
     (stdout, stderr) = proc.communicate(markdown)
 
     if stderr != "" or proc.returncode != 0:
